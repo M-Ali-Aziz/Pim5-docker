@@ -1,0 +1,3 @@
+*/10 7-19 * * * /applications/scripts/CronMaintenance.sh prod_log
+17 0,2,4,6 * * * /applications/scripts/CronMaintenance.sh prod_log
+17 20,22 * * * /applications/scripts/CronMaintenance.sh prod_log

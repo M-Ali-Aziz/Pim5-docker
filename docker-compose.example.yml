@@ -1,0 +1,45 @@
+version: '3.4'
+services:
+    ubuntu:
+        image: ehl5-ubuntu:latest
+        depends_on:
+            - mysql
+            - redis
+        volumes:
+            - "~/Desktop/mypimcore5/ehl4to5/source:/applications/http/ehl5"
+            - "~/Desktop/mypimcore5/ehl4to5/docker/settings/cert:/applications/cert"
+            - "~/Desktop/mypimcore5/ehl4to5/docker/settings/scripts:/applications/scripts"
+            - "~/.ssh:/root/.ssh"
+        ports:
+            - "80:80"
+            - "443:443"
+        tty: true
+        environment:
+            WEB_DOCUMENT_ROOT: "/applications/http/ehl5"
+            APPLICATION_PATH: "/applications/http/ehl5"
+            LANG: "C.UTF-8"
+            LC_ALL: "C.UTF-8"
+    mysql:
+        image: mysql:5.7
+        volumes:
+            - "~/Desktop/mypimcore5/ehl4to5/docker/mysql:/var/lib/mysql"
+            - "~/Desktop/mypimcore5/ehl4to5/docker/mysql:/docker-entrypoint-initdb.d"
+        ports:
+            - "3306:3306"
+        environment:
+            MYSQL_ROOT_PASSWORD: "pimcore"
+            MYSQL_PASSWORD: "pimcore"
+            MYSQL_USER: "pimcore"
+            MYSQL_DATABASE: "pimcore"
+            LANG: "C.UTF-8"
+            LC_ALL: "C.UTF-8"
+    redis:
+        image: redis:3.0.7
+        ports:
+            - "6379:6379"
+        volumes:
+            - "~/Desktop/mypimcore5/ehl4to5/docker/redis/conf/redis.conf:/usr/local/etc/redis/redis.conf"
+        environment:
+            LANG: "C.UTF-8"
+            LC_ALL: "C.UTF-8"
+
